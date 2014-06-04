@@ -41,9 +41,9 @@ exports.before = function (t) {
         barrier.start(i);
         ZKS[i] = mod_zk.createClient(ZK_URL);
         /* jshint loopfunc: true */
-        ZKS[i].once('connected', function (i) {
-            LOG.info({i: i}, 'connected');
-            barrier.done(i);
+        ZKS[i].once('connected', function (z) {
+            LOG.info({z: z}, 'connected');
+            barrier.done(z);
         }.bind(this, i));
         ZKS[i].connect();
     }
@@ -131,13 +131,11 @@ exports.election_v1 = function (t) {
         barrier.done('v0topology');
     });
     VOTER_0.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     VOTER_0.once('gleader', function () {
-        LOG.error('election test failed, unexpected gleader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected gleader event');
         done();
     });
     VOTER_0.once('error', function (err) {
@@ -167,8 +165,7 @@ exports.election_v1 = function (t) {
         done();
     });
     VOTER_1.once('gleader', function (gleader) {
-        LOG.error('election test failed, unexpected gleader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected gleader event');
         done();
     });
     VOTER_1.once('error', function (err) {
@@ -201,13 +198,11 @@ exports.election_v2 = function (t) {
     });
 
     VOTER_0.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     VOTER_0.once('gleader', function () {
-        LOG.error('election test failed, unexpected gleader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected gleader event');
         done();
     });
     VOTER_0.once('error', function (err) {
@@ -237,8 +232,7 @@ exports.election_v2 = function (t) {
         barrier.done('follower');
     });
     VOTER_1.once('gleader', function (gleader) {
-        LOG.error('election test failed, unexpected gleader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected gleader event');
         done();
     });
     VOTER_1.once('leader', function (leader) {
@@ -274,8 +268,7 @@ exports.election_v2 = function (t) {
         done();
     });
     VOTER_2.once('gleader', function (gleader) {
-        LOG.error('election test failed, unexpected gleader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected gleader event');
         done();
     });
     VOTER_2.once('error', function (err) {
@@ -296,18 +289,15 @@ exports.gleader_leave = function (t) {
     });
 
     VOTER_0.once('topology', function (top) {
-        LOG.error({top: topology}, 'should not have gotten topology event');
-        t.fail();
+        t.fail('should not have gotten topology event');
         done();
     });
 
     VOTER_0.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     VOTER_0.once('gleader', function () {
-        LOG.error('election test failed, unexpected gleader event');
         t.fail('election test failed, unexpected gleader event');
         done();
     });
@@ -358,12 +348,10 @@ exports.gleader_leave = function (t) {
         barrier.done('v2topology');
     });
     VOTER_2.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     VOTER_2.once('gleader', function () {
-        LOG.error('election test failed, unexpected gleader event');
         t.fail('election test failed, unexpected gleader event');
         done();
     });
@@ -406,8 +394,7 @@ exports.v0_rejoin = function (t) {
         barrier.done('leader');
     });
     VOTER_0.once('gleader', function () {
-        LOG.error('election test failed, unexpected gleader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected gleader event');
         done();
     });
     VOTER_0.once('error', function (err) {
@@ -436,8 +423,7 @@ exports.v0_rejoin = function (t) {
         done();
     });
     VOTER_1.once('gleader', function (gleader) {
-        LOG.error('election test failed, unexpected gleader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected gleader event');
         done();
     });
     VOTER_1.once('leader', function (leader) {
@@ -470,8 +456,7 @@ exports.v0_rejoin = function (t) {
         barrier.done('follower');
     });
     VOTER_2.once('gleader', function (gleader) {
-        LOG.error('election test failed, unexpected gleader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected gleader event');
         done();
     });
     VOTER_2.once('error', function (err) {
@@ -520,8 +505,7 @@ exports.v1_leave = function (t) {
         barrier.done('follower');
     });
     VOTER_0.once('gleader', function (gleader) {
-        LOG.error('election test failed, unexpected gleader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected gleader event');
         done();
     });
     VOTER_0.once('error', function (err) {
@@ -531,18 +515,15 @@ exports.v1_leave = function (t) {
     });
 
     VOTER_1.once('topology', function (top) {
-        LOG.error({top: topology}, 'should not have gotten topology event');
-        t.fail();
+        t.fail('should not have gotten topology event');
         done();
     });
 
     VOTER_1.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     VOTER_1.once('gleader', function () {
-        LOG.error('election test failed, unexpected gleader event');
         t.fail('election test failed, unexpected gleader event');
         done();
     });
@@ -622,8 +603,7 @@ exports.v2_leave = function (t) {
         t.fail('unexpected follower event');
     });
     VOTER_0.once('gleader', function (gleader) {
-        LOG.error('election test failed, unexpected gleader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected gleader event');
         done();
     });
     VOTER_0.once('error', function (err) {
@@ -642,8 +622,7 @@ exports.v2_leave = function (t) {
         barrier.done('v1topology');
     });
     VOTER_1.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     VOTER_1.once('gleader', function () {
@@ -663,18 +642,15 @@ exports.v2_leave = function (t) {
     });
 
     VOTER_2.once('topology', function (top) {
-        LOG.error({top: topology}, 'should not have gotten topology event');
-        t.fail();
+        t.fail('should not have gotten topology event');
         done();
     });
 
     VOTER_2.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     VOTER_2.once('gleader', function () {
-        LOG.error('election test failed, unexpected gleader event');
         t.fail('election test failed, unexpected gleader event');
         done();
     });
@@ -725,8 +701,7 @@ exports.v1v2_leave = function (t) {
         barrier.done('follower');
     });
     VOTER_0.once('gleader', function (gleader) {
-        LOG.error('election test failed, unexpected gleader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected gleader event');
         done();
     });
     VOTER_0.once('error', function (err) {
@@ -736,13 +711,11 @@ exports.v1v2_leave = function (t) {
     });
 
     VOTER_1.once('topology', function (top) {
-        LOG.error({top: topology}, 'should not have gotten topology event');
-        t.fail();
+        t.fail('should not have gotten topology event');
         done();
     });
     VOTER_1.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     VOTER_1.once('gleader', function () {
@@ -761,17 +734,14 @@ exports.v1v2_leave = function (t) {
     });
 
     VOTER_2.once('topology', function (top) {
-        LOG.error({top: topology}, 'should not have gotten topology event');
-        t.fail();
+        t.fail('should not have gotten topology event');
         done();
     });
     VOTER_2.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     VOTER_2.once('gleader', function () {
-        LOG.error('election test failed, unexpected gleader event');
         t.fail('election test failed, unexpected gleader event');
         done();
     });
@@ -807,17 +777,14 @@ exports.v0v1_leave = function (t) {
     });
 
     VOTER_0.once('topology', function (top) {
-        LOG.error({top: topology}, 'should not have gotten topology event');
-        t.fail();
+        t.fail('should not have gotten topology event');
         done();
     });
     VOTER_0.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     VOTER_0.once('gleader', function () {
-        LOG.error('election test failed, unexpected gleader event');
         t.fail('election test failed, unexpected gleader event');
         done();
     });
@@ -832,17 +799,14 @@ exports.v0v1_leave = function (t) {
     });
 
     VOTER_1.once('topology', function (top) {
-        LOG.error({top: topology}, 'should not have gotten topology event');
-        t.fail();
+        t.fail('should not have gotten topology event');
         done();
     });
     VOTER_1.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     VOTER_1.once('gleader', function () {
-        LOG.error('election test failed, unexpected gleader event');
         t.fail('election test failed, unexpected gleader event');
         done();
     });
@@ -864,8 +828,7 @@ exports.v0v1_leave = function (t) {
         barrier.done('v0topology');
     });
     VOTER_2.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     barrier.start('gleader');
@@ -903,8 +866,7 @@ exports.v0v2_leave = function (t) {
     });
 
     VOTER_0.once('topology', function (top) {
-        LOG.error({top: topology}, 'should not have gotten topology event');
-        t.fail();
+        t.fail('should not have gotten topology event');
         done();
     });
     VOTER_0.once('leader', function (leader) {
@@ -933,8 +895,7 @@ exports.v0v2_leave = function (t) {
         barrier.done('v1topology');
     });
     VOTER_1.once('leader', function (leader) {
-        LOG.error('election test failed, unexpected leader event');
-        t.fail(err);
+        t.fail('election test failed, unexpected leader event');
         done();
     });
     barrier.start('gleader');
@@ -1042,6 +1003,6 @@ function resetVoterState(cb) {
             VOTER_2.vote(_cb);
         }
     ], args: {}}, function (err, results) {
-        return cb (err, results);
+        return cb(err, results);
     });
 }

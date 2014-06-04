@@ -978,6 +978,22 @@ exports.v0v2_leave = function (t) {
     VOTER_2.leave();
 };
 
+exports['reset' + mod_uuid.v4()] = function (t) {
+    resetVoterState(function (err, results) {
+        if (err) {
+            t.fail(err);
+        }
+        t.done();
+    });
+};
+
+exports.connection_loss = function (t) {
+    VOTER_0.on('disconnected', function () {
+        t.done();
+    });
+    ZKS[0].close();
+};
+
 exports.after = function (t) {
     for (var i = 0; i < NUMBER_OF_VOTERS; i++) {
         ZKS[i].close();
@@ -991,11 +1007,13 @@ function removeVoterListeners() {
     VOTER_0.removeAllListeners('error');
     VOTER_0.removeAllListeners('follower');
     VOTER_0.removeAllListeners('topology');
+
     VOTER_1.removeAllListeners('gleader');
     VOTER_1.removeAllListeners('leader');
     VOTER_1.removeAllListeners('error');
     VOTER_1.removeAllListeners('follower');
     VOTER_1.removeAllListeners('topology');
+
     VOTER_2.removeAllListeners('gleader');
     VOTER_2.removeAllListeners('leader');
     VOTER_2.removeAllListeners('error');

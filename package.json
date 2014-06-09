@@ -1,6 +1,6 @@
 {
     "name": "leader",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "zookeeper based elections",
     "author": {
         "name": "Yunong J Xiao",

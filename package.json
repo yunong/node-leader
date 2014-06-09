@@ -8,7 +8,7 @@
         "url": "yunong.ca"
     },
     "engines": {
-        "node": ">0.10.28"
+        "node": ">0.10"
     },
     "engineStrict": true,
     "repository": {

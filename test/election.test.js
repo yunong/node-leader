@@ -1,4 +1,4 @@
-var election = require('../lib/election');
+var election = require('../election');
 
 var mod_path = require('path');
 

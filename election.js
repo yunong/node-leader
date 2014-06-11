@@ -131,9 +131,11 @@ Election.prototype.leave = function leave(cb) {
 
 /**
  * Participate and vote in this election.
+ * @param data [String] data to attach to the election node.
  * @param cb [Function] callback, invoked when we have joined the electon.
  */
-Election.prototype.vote = function vote(cb) {
+Election.prototype.vote = function vote(data, cb) {
+    mod_assert.optionalString(data, 'data');
     mod_assert.optionalFunc(cb, 'cb');
 
     var self = this;
@@ -158,17 +160,32 @@ Election.prototype.vote = function vote(cb) {
             log.info({
                 path: path
             }, 'election.vote: creating election node');
-            self._zk.create(
-                path,
-                mod_zk.CreateMode.EPHEMERAL_SEQUENTIAL,
-                function (err, zPath) {
-                    self._znode = mod_path.basename(zPath);
-                    log.info({
-                        path: path,
-                        znode: self._znode
-                    }, 'election.vote: finished creating election node');
-                    return _cb(err);
-                });
+            if (data) {
+                self._zk.create(
+                    path,
+                    new Buffer(data),
+                    mod_zk.CreateMode.EPHEMERAL_SEQUENTIAL,
+                    function (err, zPath) {
+                        self._znode = mod_path.basename(zPath);
+                        log.info({
+                            path: path,
+                            znode: self._znode
+                        }, 'election.vote: finished creating election node');
+                        return _cb(err);
+                    });
+            } else {
+                self._zk.create(
+                    path,
+                    mod_zk.CreateMode.EPHEMERAL_SEQUENTIAL,
+                    function (err, zPath) {
+                        self._znode = mod_path.basename(zPath);
+                        log.info({
+                            path: path,
+                            znode: self._znode
+                        }, 'election.vote: finished creating election node');
+                        return _cb(err);
+                    });
+            }
         },
         function _watch(_, _cb) {
             self.watch(_cb);

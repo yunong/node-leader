@@ -994,13 +994,13 @@ function resetVoterState(cb) {
             VOTER_2.leave(_cb);
         },
         function (_, _cb) {
-            VOTER_0.vote(_cb);
+            VOTER_0.vote(undefined, _cb);
         },
         function (_, _cb) {
-            VOTER_1.vote(_cb);
+            VOTER_1.vote(undefined, _cb);
         },
         function (_, _cb) {
-            VOTER_2.vote(_cb);
+            VOTER_2.vote(undefined, _cb);
         }
     ], args: {}}, function (err, results) {
         return cb(err, results);

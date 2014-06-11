@@ -213,14 +213,14 @@ Election.prototype.watch = function watch(cb) {
     var self = this;
     var log = self._log;
 
-    log.info({
+    log.debug({
         path: self._path,
         pathPrefix: self._pathPrefix,
         znode: self._znode
     }, 'election.watch: entered');
 
     function getChildrenCallback(err, data) {
-        log.info({
+        log.debug({
             err: err,
             data: data
         }, 'Election.watch: returned from getChildren');
@@ -235,7 +235,7 @@ Election.prototype.watch = function watch(cb) {
             }
         } else {
             data.sort(compare);
-            log.info({
+            log.debug({
                 data: data,
                 znode: self._znode
             }, 'Election.watch: sorted election nodes.');
@@ -249,7 +249,7 @@ Election.prototype.watch = function watch(cb) {
                 var myLeader = (myIndex === 0 ? null : data[myIndex - 1]);
                 var myFollower = ((myIndex + 1 === data.length) ? null :
                                   data[myIndex + 1]);
-                log.info({
+                log.debug({
                     currentMyLeader: self._myLeader,
                     currentMyFollower: self._myFollower,
                     currentIsGLeader: self._isGLeader,
@@ -265,10 +265,12 @@ Election.prototype.watch = function watch(cb) {
                 if (myIndex === 0 && !self._isGLeader) {
                     self._myLeader = null;
                     self._isGLeader = true;
+                    log.info('emitting gLeader');
                     self.emit('gleader');
                 }
                 if (self._myFollower !== myFollower) {
                     self._myFollower = myFollower;
+                    log.info({follower: myFollower}, 'emitting follower');
                     self.emit('follower', self._myFollower);
                 }
                 if (!self._myLeader) {
@@ -276,12 +278,13 @@ Election.prototype.watch = function watch(cb) {
                 }
                 if (self._myLeader !== myLeader) {
                     self._myLeader = myLeader;
+                    log.info({leader: myLeader}, 'emitting leader');
                     self.emit('leader', self._myLeader);
                 }
             }
 
             // only emit the topology if it changes.
-            log.info({
+            log.debug({
                 newTopology: data,
                 oldTopology: self._topology
             }, 'checking topology');

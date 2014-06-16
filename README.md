@@ -14,7 +14,7 @@ You can think of this election as a daisy chain of nodes.
 a->b->c->d->e...
 ```
 
-Each node will only be aware of the node directly adjacent to it, i.e. `b` is
+Each node will only be aware of the node directly adjacent to it, e.g. `b` is
 only aware of `a` and `c`. The head of the daisy chain is special and is known
 as the global leader.
 
@@ -56,7 +56,12 @@ e.g. `b` will get a `follower` event, with `c` as its follower.
 
 # Usage
 You can use node-leader to either watch an election, or participate in an
-election. Node-leader expects you to pass it a handle to a already connected
+election. Watching an election means you will only get the `topology` events,
+but will not actually create any emphemeral nodes of your own. This is useful
+for clients or services that depend on the election. By participating in the
+election, via `vote()`, you will additionally emit the `gleader`, `leader` and
+`follower` events. Node-leader expects you to pass it a handle to a already
+connected
 [node-zookeeper-client](https://github.com/alexguan/node-zookeeper-client.git).
 
 To watch an election:
@@ -122,3 +127,29 @@ voter.on('error', function (err) {
 
 // join the election.
 voter.vote();
+
+# Contributions
+Contributions are welcome. Please make sure `npm test` runs cleanly.
+
+# License
+The MIT License (MIT)
+
+Copyright (c) 2014 Yunong J Xiao
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

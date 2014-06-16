@@ -71,7 +71,7 @@ var zkClient = ...
 
 var watcher = leader.createElection({
     zk: zkClient,
-    path: /glorious_election
+    path: '/glorious_election'
 });
 
 watcher.on('topology', function (top) {
@@ -91,7 +91,7 @@ var zkClient = ...
 
 voter = leader.createElection({
     zk: zkClient,
-    path: /glorious_election,
+    path: '/glorious_election',
     // the optional prefix of the node path. This is usually used to identify
     // the node in the election. Having a prefix means you can fetch data about
     // this node just from the topology event, without having to explicitly get

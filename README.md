@@ -1,5 +1,7 @@
 node-leader
 ===========
+[![NPM](https://nodei.co/npm/leader.png)](https://nodei.co/npm/leader/)
+[![NPM](https://nodei.co/npm-dl/leader.png)](https://nodei.co/npm/leader/)
 
 #Zookeeper based elections
 
@@ -35,6 +37,11 @@ nodes under a specific path. Each voter creates a node under the election path
 As new voters join, they will create new nodes with a monotonically increasing
 sequence number. When voters expire, their ephemeral nodes are automatically
 removed by zookeeper.
+
+# Install
+```bash
+npm install leader
+```
 
 # API
 

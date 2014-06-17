@@ -84,7 +84,7 @@ watcher.on('topology', function (top) {
 });
 ```
 
-To participate in an election
+To participate in an election:
 ```javascript
 
 var leader = require('node-leader');
@@ -127,6 +127,7 @@ voter.on('error', function (err) {
 
 // join the election.
 voter.vote();
+```
 
 # Contributions
 Contributions are welcome. Please make sure `npm test` runs cleanly.
